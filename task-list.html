@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task List – TaskFlow</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>TaskFlow</h1>
+    <nav>
+      <a href="index.html">Dashboard</a>
+      <a href="add-task.html">Add Task</a>
+      <a href="task-list.html" class="active">Task List</a>
+      <a href="task-detail.html">Task Detail</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>All Tasks</h2>
+
+    <div class="filter-buttons">
+      <button onclick="filterTasks('all')" class="btn active-filter" id="btn-all">All</button>
+      <button onclick="filterTasks('pending')" class="btn" id="btn-pending">Pending</button>
+      <button onclick="filterTasks('completed')" class="btn" id="btn-completed">Completed</button>
+    </div>
+
+    <table id="task-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Title</th>
+          <th>Due Date</th>
+          <th>Priority</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="task-body">
+        <tr data-status="pending">
+          <td>1</td>
+          <td>Design Homepage Layout</td>
+          <td>2026-06-20</td>
+          <td><span class="priority high">High</span></td>
+          <td><span class="status pending">Pending</span></td>
+        </tr>
+        <tr data-status="completed">
+          <td>2</td>
+          <td>Write Project Report</td>
+          <td>2026-06-15</td>
+          <td><span class="priority medium">Medium</span></td>
+          <td><span class="status completed">Completed</span></td>
+        </tr>
+        <tr data-status="pending">
+          <td>3</td>
+          <td>Fix Login Bug</td>
+          <td>2026-06-18</td>
+          <td><span class="priority high">High</span></td>
+          <td><span class="status pending">Pending</span></td>
+        </tr>
+        <tr data-status="completed">
+          <td>4</td>
+          <td>Update README</td>
+          <td>2026-06-10</td>
+          <td><span class="priority low">Low</span></td>
+          <td><span class="status completed">Completed</span></td>
+        </tr>
+        <tr data-status="pending">
+          <td>5</td>
+          <td>Deploy to Render</td>
+          <td>2026-06-25</td>
+          <td><span class="priority medium">Medium</span></td>
+          <td><span class="status pending">Pending</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 TaskFlow – Member 3</p>
+  </footer>
+
+  <script>
+    function filterTasks(status) {
+      const rows = document.querySelectorAll('#task-body tr');
+      rows.forEach(row => {
+        if (status === 'all' || row.dataset.status === status) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+
+      // Highlight active button
+      ['all', 'pending', 'completed'].forEach(s => {
+        document.getElementById('btn-' + s).classList.remove('active-filter');
+      });
+      document.getElementById('btn-' + status).classList.add('active-filter');
+    }
+  </script>
+</body>
+</html>
