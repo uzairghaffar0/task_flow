@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Detail – TaskFlow</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── Navigation ──────────────────────────────────────── -->
+  <nav>
+    <a href="index.html" class="brand">✅ TaskFlow</a>
+    <ul>
+      <li><a href="index.html">Dashboard</a></li>
+      <li><a href="add-task.html">Add Task</a></li>
+      <li><a href="task-list.html">Task List</a></li>
+      <li><a href="task-detail.html" class="active">Task Detail</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── Main Content ────────────────────────────────────── -->
+  <div class="container">
+
+    <!-- Back link -->
+    <div class="mt-16" style="margin-bottom: 16px;">
+      <a href="task-list.html" class="btn btn-outline" style="font-size:0.85rem; padding:6px 14px;">
+        ← Back to Task List
+      </a>
+    </div>
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <h1>Task Detail</h1>
+      <p>View the full details of the selected task and take action on it.</p>
+    </div>
+
+    <!-- Status Alert (shown when a task is completed) -->
+    <div class="alert alert-success" id="completedAlert" style="display:none;">
+      ✔ This task has been marked as <strong>Completed</strong>.
+    </div>
+
+    <!-- Task Detail Card -->
+    <div class="card">
+      <div class="flex justify-between align-center" style="margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+        <h2 id="taskTitle" style="font-size:1.4rem; color:#1a73e8;">
+          Implement Login Page UI
+        </h2>
+        <span class="badge badge-pending" id="statusBadge">Pending</span>
+      </div>
+
+      <table class="detail-table">
+        <tr>
+          <th>Task ID</th>
+          <td id="taskId">#TF-004</td>
+        </tr>
+        <tr>
+          <th>Description</th>
+          <td id="taskDescription">
+            Design and implement the login page for the TaskFlow web application.
+            The page should include email and password fields, a submit button, and
+            basic form validation. Ensure it is linked to the shared stylesheet and
+            matches the overall application theme.
+          </td>
+        </tr>
+        <tr>
+          <th>Due Date</th>
+          <td id="taskDueDate">2026-06-20</td>
+        </tr>
+        <tr>
+          <th>Priority</th>
+          <td><span class="badge badge-high" id="priorityBadge">High</span></td>
+        </tr>
+        <tr>
+          <th>Status</th>
+          <td id="taskStatusText">Pending</td>
+        </tr>
+        <tr>
+          <th>Assigned To</th>
+          <td id="taskAssignee">Member 4</td>
+        </tr>
+        <tr>
+          <th>Created On</th>
+          <td id="taskCreated">2026-06-01</td>
+        </tr>
+        <tr>
+          <th>Last Updated</th>
+          <td id="taskUpdated">2026-06-10</td>
+        </tr>
+        <tr>
+          <th>Notes</th>
+          <td id="taskNotes">
+            Refer to the existing style.css for colour tokens and button classes.
+            Make sure the page is responsive on mobile screens.
+          </td>
+        </tr>
+      </table>
+
+      <!-- Action Buttons -->
+      <div class="action-row">
+        <button class="btn btn-success" id="completeBtn" onclick="markComplete()">
+          ✔ Mark as Complete
+        </button>
+        <button class="btn btn-danger" id="deleteBtn" onclick="deleteTask()">
+          🗑 Delete Task
+        </button>
+        <a href="task-list.html" class="btn btn-secondary">
+          ← Back to List
+        </a>
+      </div>
+    </div>
+
+    <!-- Activity / History Card -->
+    <div class="card">
+      <h3 style="font-size:1.1rem; margin-bottom: 16px; color:#333;">Activity History</h3>
+      <ul id="activityLog" style="list-style:none; padding:0;">
+        <li style="padding:10px 0; border-bottom:1px solid #e9ecef; font-size:0.9rem;">
+          <span class="text-muted">2026-06-01 09:00</span> – Task created by Team Lead.
+        </li>
+        <li style="padding:10px 0; border-bottom:1px solid #e9ecef; font-size:0.9rem;">
+          <span class="text-muted">2026-06-05 14:22</span> – Priority changed to <strong>High</strong>.
+        </li>
+        <li style="padding:10px 0; font-size:0.9rem;">
+          <span class="text-muted">2026-06-10 11:05</span> – Notes updated by Member 4.
+        </li>
+      </ul>
+    </div>
+
+  </div><!-- /.container -->
+
+  <!-- Footer -->
+  <footer>
+    <p>TaskFlow &copy; 2026 &mdash; DevOps Fundamentals, Spring 2026 &mdash; Member 4: task-detail.html</p>
+  </footer>
+
+  <!-- ── Inline Script (no external JS) ──────────────────── -->
+  <script>
+    /**
+     * markComplete()
+     * Simulates marking a task as completed by updating the UI.
+     */
+    function markComplete() {
+      const statusBadge   = document.getElementById('statusBadge');
+      const statusText    = document.getElementById('taskStatusText');
+      const completeBtn   = document.getElementById('completeBtn');
+      const completedAlert = document.getElementById('completedAlert');
+
+      // Update badge
+      statusBadge.textContent = 'Completed';
+      statusBadge.className   = 'badge badge-completed';
+
+      // Update status cell
+      statusText.textContent = 'Completed';
+
+      // Show success alert
+      completedAlert.style.display = 'block';
+      completedAlert.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+      // Disable the button to prevent double-clicking
+      completeBtn.disabled    = true;
+      completeBtn.textContent = '✔ Completed';
+      completeBtn.style.opacity = '0.6';
+      completeBtn.style.cursor  = 'not-allowed';
+
+      // Add log entry
+      const log   = document.getElementById('activityLog');
+      const now   = new Date();
+      const ts    = now.toISOString().replace('T', ' ').slice(0, 16);
+      const entry = document.createElement('li');
+      entry.style.cssText = 'padding:10px 0; border-top:1px solid #e9ecef; font-size:0.9rem;';
+      entry.innerHTML = `<span class="text-muted">${ts}</span> – Task marked as <strong>Completed</strong>.`;
+      log.appendChild(entry);
+    }
+
+    /**
+     * deleteTask()
+     * Confirms deletion and redirects back to the Task List.
+     */
+    function deleteTask() {
+      const confirmed = confirm(
+        'Are you sure you want to delete this task? This action cannot be undone.'
+      );
+      if (confirmed) {
+        alert('Task deleted successfully. Redirecting to Task List…');
+        window.location.href = 'task-list.html';
+      }
+    }
+  </script>
+
+</body>
+</html>
